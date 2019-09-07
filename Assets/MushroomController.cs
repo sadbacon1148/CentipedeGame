@@ -20,14 +20,13 @@ public class MushroomController : MonoBehaviour
     {
         if (collision.tag == "Bullet")
         {
-            if (requireBulletToDestroy > 0)
-            {
-                --requireBulletToDestroy;
-            }
-            else
+            --requireBulletToDestroy;
+
+            if (requireBulletToDestroy <= 0)
             {
                 Destroy(gameObject);
             }
+          
             collision.gameObject.SetActive(false);
         }
     }

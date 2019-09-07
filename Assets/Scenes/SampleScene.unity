@@ -203,7 +203,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 7.5404177
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -508,15 +508,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 834604db2321f184c9574783a5cd2c5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rows: 5
-  cols: 5
-  gridSize: {x: 10, y: 5}
+  rows: 15
+  cols: 15
+  gridSize: {x: 15, y: 15}
   gridOffset: {x: 0, y: 0}
   cellSprite: {fileID: 10911, guid: 0000000000000000f000000000000000, type: 0}
   mushroomPrefab: {fileID: 1345852895547260257, guid: 8a4d5505ebd32a4418144e5ab5ac53c6,
     type: 3}
   boxCollider2D: {fileID: 1429587711}
   mushroomRadius: 0
+  numOfMushrooms: 0
+  randomSpawn: 0
 --- !u!4 &1429587710
 Transform:
   m_ObjectHideFlags: 0
@@ -613,7 +615,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: 7dcc1c074fe13244f95ee35dc619cafb, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

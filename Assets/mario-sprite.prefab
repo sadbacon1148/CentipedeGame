@@ -93,7 +93,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08b32fa48de645346bb345c25a0f1baf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  requireBulletToDestroy: 2
+  requireBulletToDestroy: 3
 --- !u!58 &-6289675698398319274
 CircleCollider2D:
   m_ObjectHideFlags: 0
