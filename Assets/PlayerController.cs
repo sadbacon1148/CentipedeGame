@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+
 
 public enum DIRECTION { UP, DOWN, LEFT, RIGHT }
 
@@ -22,6 +24,10 @@ public class PlayerController : MonoBehaviour
     private float nextFire;
     [SerializeField] private float fireRate;
     public Transform spawnPosition;
+    public Text scoreText;
+    public Text livesText;
+    [SerializeField] private int lives = 3;
+
 
     // Start is called before the first frame update
     void Start()
@@ -33,6 +39,9 @@ public class PlayerController : MonoBehaviour
         xMinPlayerMove = -((xPlayerRange) / 2);
         xMaxPlayerMove = xPlayerRange/2;
         transform.position = new Vector3(0, yMinPlayerMove+playerOffset, 0);
+
+        livesText.text = "Lives: " + lives.ToString();
+
     }
 
     // Update is called once per frame
@@ -147,6 +156,14 @@ public class PlayerController : MonoBehaviour
         }
 
 
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.tag == "Centipede")
+        {
+            lives--;
+        }
     }
 
 
