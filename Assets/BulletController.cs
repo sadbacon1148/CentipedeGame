@@ -13,5 +13,15 @@ public class BulletController : MonoBehaviour
         //rb.velocity = transform.forward * speed;
         rb.velocity = Vector2.up * speed;
 
+
+    }
+
+    void OnEnable()
+    {
+        if (rb != null)
+        {
+            rb.velocity = Vector2.up * speed;
+
+        }
     }
 }

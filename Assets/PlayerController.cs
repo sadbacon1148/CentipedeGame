@@ -7,7 +7,8 @@ public enum DIRECTION { UP, DOWN, LEFT, RIGHT }
 public class PlayerController : MonoBehaviour
 {
     private bool canMove = true, moving = false;
-    private int speed = 5, buttonCoolDown = 0;
+    private int buttonCoolDown = 0;
+    [SerializeField] private int playerSpeed = 5;
     private DIRECTION dir = DIRECTION.DOWN;
     private Vector3 pos;
     public Grid grid;
@@ -18,9 +19,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float xMinPlayerMove;
     [SerializeField] private float xMaxPlayerMove;
     [SerializeField] private float playerOffset = 0.2f;
-    public Transform shotSpawn;
     private float nextFire;
     [SerializeField] private float fireRate;
+    public Transform spawnPosition;
 
     // Start is called before the first frame update
     void Start()
@@ -37,7 +38,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        buttonCoolDown--;
+        //buttonCoolDown--;
         if (canMove)
         {
             pos = transform.position;
@@ -53,14 +54,14 @@ public class PlayerController : MonoBehaviour
 
                 move();
             }
-            transform.position = Vector3.MoveTowards(transform.position, pos, Time.deltaTime * speed);
+            transform.position = Vector3.MoveTowards(transform.position, pos, Time.deltaTime * playerSpeed);
         }
 
-        //if (Input.GetKeyDown(KeyCode.Space) && Time.time > nextFire)
-        if (Input.GetButton("Fire1") && Time.time > nextFire)
+        if (Input.GetKeyDown(KeyCode.Space) && Time.time > nextFire)
+        //if (Input.GetButton("Fire1") && Time.time > nextFire)
         {
             nextFire = Time.time + fireRate;
-            ObjectPooler.Instance.SpawnFromPool("Bullet", transform.position, Quaternion.identity);
+            ObjectPooler.Instance.SpawnFromPool("Bullet", spawnPosition.position, Quaternion.identity);
         }
 
     }
@@ -81,14 +82,14 @@ public class PlayerController : MonoBehaviour
             {
                 if(dir != DIRECTION.UP)
                 {
-                    buttonCoolDown = 5;
+                    //buttonCoolDown = 5;
                     dir = DIRECTION.UP;
                 }
                 else
                 {
                     canMove = false;
                     moving = true;
-                    pos += Vector3.up;
+                    pos += new Vector3(0f,1000f,0f);
                     pos.y = Mathf.Clamp(pos.y, yMinPlayerMove+playerOffset, yMaxPlayerMove);
 
                 }
@@ -97,7 +98,7 @@ public class PlayerController : MonoBehaviour
             {
                 if (dir != DIRECTION.DOWN)
                 {
-                    buttonCoolDown = 5;
+                    //buttonCoolDown = 5;
                     dir = DIRECTION.DOWN;
                 }
                 else
@@ -114,7 +115,7 @@ public class PlayerController : MonoBehaviour
             {
                 if (dir != DIRECTION.LEFT)
                 {
-                    buttonCoolDown = 5;
+                    //buttonCoolDown = 5;
                     dir = DIRECTION.LEFT;
                 }
                 else
@@ -130,7 +131,7 @@ public class PlayerController : MonoBehaviour
             {
                 if (dir != DIRECTION.RIGHT)
                 {
-                    buttonCoolDown = 5;
+                    //buttonCoolDown = 5;
                     dir = DIRECTION.RIGHT;
                 }
                 else

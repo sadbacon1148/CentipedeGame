@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Grid : MonoBehaviour
 {
@@ -18,12 +19,13 @@ public class Grid : MonoBehaviour
 
     [Header("Box Collider")]
     public BoxCollider2D boxCollider2D;
+    public Canvas scoreCanvas;
 
     void Start()
     {
         InitCells();
         boxCollider2D = GetComponent<BoxCollider2D>();
-
+        scoreCanvas = GetComponent<Canvas>();
     }
 
     // Update is called once per frame
@@ -79,6 +81,8 @@ public class Grid : MonoBehaviour
         boxCollider2D.size = new Vector2(gridSize.x,1f);
         boxCollider2D.offset = new Vector2(0f, (gridSize.y / 2)+2f);
 
+        //scoreCanvas.GetComponentInChildren<RectTransform>().
+
     }
 
     //so you can see the width and height of the grid on editor
@@ -92,7 +96,7 @@ public class Grid : MonoBehaviour
         if(collision.tag == "Bullet")
         {
             collision.gameObject.SetActive(false);
-
+            Debug.Log("hit");
         }
             
     }
