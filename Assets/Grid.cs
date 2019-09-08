@@ -20,16 +20,20 @@ public class Grid : MonoBehaviour
 
     [Header("Box Collider")]
     public BoxCollider2D boxCollider2D;
-    [SerializeField] private float mushroomRadius;
-    [SerializeField] private int numOfMushrooms;
+
     [SerializeField] private float randomSpawn;
+
+    [Header("Centipede Settings")]
+    public GameObject centipedeHead;
+    public int centipedeNumber;
+
+    public GameController gameController;
 
     void Start()
     {
+        centipedeNumber = gameController.numOfCentipedeUnit;
         InitCells();
         boxCollider2D = GetComponent<BoxCollider2D>();
-        mushroomRadius = mushroomPrefab.GetComponent<CircleCollider2D>().radius;
-        numOfMushrooms = (int)(0.5 * cols * rows);
     }
 
     // Update is called once per frame
@@ -74,10 +78,37 @@ public class Grid : MonoBehaviour
                 //Instantiate the game object, at position pos, with rotation set to identity
                 GameObject instanceGridCell = Instantiate(cellObject, pos, Quaternion.identity) as GameObject;
                 randomSpawn = Random.Range(0f, 10f);
-                if (randomSpawn > 8)
+
+
+                if (randomSpawn > 8 && row < rows - 2 && row > 2)
                 {
-                   instanceMushroom = Instantiate(mushroomPrefab, GetRandomPosition(), Quaternion.identity) as GameObject;
+                    instanceMushroom = Instantiate(mushroomPrefab, pos, Quaternion.identity) as GameObject;
+                    //Debug.Log(row + "____" + rows);
                 }
+
+                if (row > rows -2)
+                {
+                    //Debug.Log(row + "CENTIPEDE" + rows);
+                    if (centipedeNumber > 1 )
+                    {
+                        Instantiate(centipedeHead,pos, Quaternion.identity);
+                        centipedeNumber--;
+                        Debug.Log("centipede--");
+                    }
+                    else
+                    {
+                        if (centipedeNumber == 1)
+                        {
+                            GameObject centipede = Instantiate(centipedeHead, pos, Quaternion.identity);
+                            CentipedeController controller = centipede.GetComponent<CentipedeController>();
+                            controller.head = true;
+                            controller.spriteRenderer.sprite = controller.headSprite;
+                            centipedeNumber--;
+                        }
+                        Debug.Log("centipede else");
+                    }
+                }
+                
 
                 //set the parent of the cell to GRID so you can move the cells together with the grid
                 instanceGridCell.transform.parent = transform;
@@ -85,28 +116,16 @@ public class Grid : MonoBehaviour
             }
             
         }
-        for (int i = 0; i < numOfMushrooms; i++)
-        {
-            
-            
-            Debug.Log("mushroom");
-        }
+
 
         //destroy the object used to instantiate the cells
         Destroy(cellObject);
-
-        
-
 
         boxCollider2D.size = new Vector2(gridSize.x,1f);
         boxCollider2D.offset = new Vector2(0f, (gridSize.y / 2)+2f);
     }
 
-    Vector2 GetRandomPosition()
-    {
-        return new Vector2((int)Random.Range(-gridSize.x / 2 + mushroomRadius , gridSize.x / 2 - mushroomRadius), (int)Random.Range(-gridSize.y / 2 + mushroomRadius  , gridSize.y / 2 - mushroomRadius ));
 
-    }
 
     //so you can see the width and height of the grid on editor
     private void OnDrawGizmos()

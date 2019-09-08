@@ -4,10 +4,11 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
-public enum DIRECTION { UP, DOWN, LEFT, RIGHT }
 
 public class PlayerController : MonoBehaviour
 {
+    public enum DIRECTION { UP, DOWN, LEFT, RIGHT }
+
     private bool canMove = true, moving = false;
     private int buttonCoolDown = 0;
     [SerializeField] private int playerSpeed = 5;
@@ -85,10 +86,8 @@ public class PlayerController : MonoBehaviour
 
     private void move()
     {
-        if(buttonCoolDown <= 0)
-        {
-            if (Input.GetKey(KeyCode.UpArrow))
-            {
+             if (Input.GetKey(KeyCode.UpArrow))
+                {
                 if(dir != DIRECTION.UP)
                 {
                     //buttonCoolDown = 5;
@@ -102,7 +101,7 @@ public class PlayerController : MonoBehaviour
                     pos.y = Mathf.Clamp(pos.y, yMinPlayerMove+playerOffset, yMaxPlayerMove);
 
                 }
-            }
+             }
             else if (Input.GetKey(KeyCode.DownArrow))
             {
                 if (dir != DIRECTION.DOWN)
@@ -153,7 +152,7 @@ public class PlayerController : MonoBehaviour
 
             }
 
-        }
+        
 
 
     }

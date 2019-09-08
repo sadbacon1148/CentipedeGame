@@ -478,6 +478,50 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1412203600
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1412203602}
+  - component: {fileID: 1412203601}
+  m_Layer: 0
+  m_Name: GameController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1412203601
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1412203600}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b48df67dcbf0c5e478a9fa4c1547e6ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  numOfCentipedeUnit: 15
+--- !u!4 &1412203602
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1412203600}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -2.0501506, y: -0.57493055, z: -5.1523438}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1429587708
 GameObject:
   m_ObjectHideFlags: 0
@@ -508,17 +552,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 834604db2321f184c9574783a5cd2c5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rows: 15
-  cols: 15
-  gridSize: {x: 15, y: 15}
+  rows: 21
+  cols: 21
+  gridSize: {x: 21, y: 21}
   gridOffset: {x: 0, y: 0}
   cellSprite: {fileID: 10911, guid: 0000000000000000f000000000000000, type: 0}
   mushroomPrefab: {fileID: 1345852895547260257, guid: 8a4d5505ebd32a4418144e5ab5ac53c6,
     type: 3}
   boxCollider2D: {fileID: 1429587711}
   mushroomRadius: 0
-  numOfMushrooms: 0
   randomSpawn: 0
+  centipedeHead: {fileID: 9049645283106969520, guid: f52e0a1dd7c56fe4c8712ce482ba9809,
+    type: 3}
+  centipedeNumber: 0
+  gameController: {fileID: 1412203601}
 --- !u!4 &1429587710
 Transform:
   m_ObjectHideFlags: 0
