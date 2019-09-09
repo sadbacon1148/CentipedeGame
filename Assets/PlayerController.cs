@@ -52,7 +52,7 @@ public class PlayerController : MonoBehaviour
         if (canMove)
         {
             pos = transform.position;
-            move();
+            Move();
         }
 
         if (moving)
@@ -62,7 +62,7 @@ public class PlayerController : MonoBehaviour
                 moving = false;
                 canMove = true;
 
-                move();
+                Move();
             }
             transform.position = Vector3.MoveTowards(transform.position, pos, Time.deltaTime * playerSpeed);
         }
@@ -84,7 +84,7 @@ public class PlayerController : MonoBehaviour
         //transform.position = playerPosition;
     }
 
-    private void move()
+    private void Move()
     {
              if (Input.GetKey(KeyCode.UpArrow))
                 {

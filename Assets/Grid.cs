@@ -19,12 +19,15 @@ public class Grid : MonoBehaviour
     private Vector2 cellScale;
 
     [Header("Box Collider")]
-    public BoxCollider2D boxCollider2D;
+    public BoxCollider2D topCollider;
+    public BoxCollider2D leftCollider;
+    public BoxCollider2D rightCollider;
+
 
     [SerializeField] private float randomSpawn;
 
     [Header("Centipede Settings")]
-    public GameObject centipedeHead;
+    public GameObject centipedeSprite;
     public int centipedeNumber;
 
     public GameController gameController;
@@ -33,7 +36,7 @@ public class Grid : MonoBehaviour
     {
         centipedeNumber = gameController.numOfCentipedeUnit;
         InitCells();
-        boxCollider2D = GetComponent<BoxCollider2D>();
+        //boxCollider2D = GetComponent<BoxCollider2D>();
     }
 
     // Update is called once per frame
@@ -91,24 +94,23 @@ public class Grid : MonoBehaviour
                     //Debug.Log(row + "CENTIPEDE" + rows);
                     if (centipedeNumber > 1 )
                     {
-                        Instantiate(centipedeHead,pos, Quaternion.identity);
+                        Instantiate(centipedeSprite,pos, Quaternion.identity);
                         centipedeNumber--;
-                        Debug.Log("centipede--");
+                        //Debug.Log("centipede--");
                     }
                     else
                     {
                         if (centipedeNumber == 1)
                         {
-                            GameObject centipede = Instantiate(centipedeHead, pos, Quaternion.identity);
-                            CentipedeController controller = centipede.GetComponent<CentipedeController>();
+                            GameObject instanceCentipede = Instantiate(centipedeSprite, pos, Quaternion.identity);
+                            CentipedeController controller = instanceCentipede.GetComponent<CentipedeController>();
                             controller.head = true;
                             controller.spriteRenderer.sprite = controller.headSprite;
                             centipedeNumber--;
                         }
-                        Debug.Log("centipede else");
+                        //Debug.Log("centipede else");
                     }
                 }
-                
 
                 //set the parent of the cell to GRID so you can move the cells together with the grid
                 instanceGridCell.transform.parent = transform;
@@ -121,8 +123,15 @@ public class Grid : MonoBehaviour
         //destroy the object used to instantiate the cells
         Destroy(cellObject);
 
-        boxCollider2D.size = new Vector2(gridSize.x,1f);
-        boxCollider2D.offset = new Vector2(0f, (gridSize.y / 2)+2f);
+        topCollider.size = new Vector2(gridSize.x,1f);
+        topCollider.offset = new Vector2(0f, (gridSize.y / 2)+1f);
+
+        leftCollider.size = new Vector2(1f, gridSize.y);
+        leftCollider.offset = new Vector2(-(gridSize.x / 2) - 0.5f, 0f);
+
+        rightCollider.size = new Vector2(1f, gridSize.y);
+        rightCollider.offset = new Vector2((gridSize.x / 2) + 0.5f, 0f);
+
     }
 
 
