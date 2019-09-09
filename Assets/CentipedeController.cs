@@ -16,6 +16,7 @@ public class CentipedeController : MonoBehaviour
     public Sprite headSprite;
     private Vector2 savePosition;
     private bool checkPosition=true;
+    private bool headLeft = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -25,6 +26,8 @@ public class CentipedeController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Debug.Log(canMove + "canmove");
+        Debug.Log(moving + "moving");
         savePosition = new Vector2(transform.position.x, transform.position.y);
 
         if (canMove)
@@ -60,9 +63,10 @@ public class CentipedeController : MonoBehaviour
         
     }
 
-    public void CheckCentipedeDirection()
+    public void CheckCentipedeDirection()   
     {
-        if (transform.position.x < savePosition.x) //moving from the right
+        if(headLeft)
+        //if (transform.position.x < savePosition.x) //moving from the right
         {
             MoveLeft();
             Debug.Log("move left");
@@ -74,10 +78,22 @@ public class CentipedeController : MonoBehaviour
 
         }
 
-        //if(transform.position.y == savePosition.y)
-        //{
-        //    MoveLeft();
-        //}
+        if (transform.position.y < savePosition.y)
+        {
+            Debug.Log("check y");
+            checkPosition = true;
+            if (transform.position.x < savePosition.x) 
+            {
+                MoveRight();
+                Debug.Log("check y go right");
+            }
+            else
+            {
+                MoveLeft();
+                Debug.Log("check y go left");
+
+            }
+        }
     }
 
     public void MoveRight()
@@ -100,6 +116,8 @@ public class CentipedeController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        canMove = false;
+        moving = true;
         Debug.Log("OnTriggerEnter");
         Debug.Log(checkPosition + "in right collider");
 
@@ -110,35 +128,17 @@ public class CentipedeController : MonoBehaviour
 
         }
 
-        if (collision.tag == "Mushroom")
+        if(collision.tag == "RightCollider" || collision.tag == "LeftCollider" || collision.tag == "Mushroom")
         {
-            if (transform.position.x > savePosition.x) //moving from the right
-            {
-                pos += Vector3.down;
-                MoveLeft();
-            }
-            else
-            {
-                MoveRight();
-            }
-
-        }
-
-        if(collision.tag == "RightCollider")
-        {
-            canMove = false;
-            moving = true;
-            checkPosition = false;
+           
+            //checkPosition = false;
             pos += Vector3.down;
-            MoveLeft();
+            //MoveLeft();
+            headLeft = !headLeft;
             //Debug.Log("enter right");
         }
 
-        if(collision.tag == "LeftCollider")
-        {
-            pos += Vector3.down;
-            MoveRight();
-        }
+  
 
         
     }
