@@ -22,7 +22,7 @@ public class Grid : MonoBehaviour
     public BoxCollider2D topCollider;
     public BoxCollider2D leftCollider;
     public BoxCollider2D rightCollider;
-
+    public BoxCollider2D bottomCollider;
 
     [SerializeField] private float randomSpawn;
 
@@ -36,7 +36,6 @@ public class Grid : MonoBehaviour
     {
         centipedeNumber = gameController.numOfCentipedeUnit;
         InitCells();
-        //boxCollider2D = GetComponent<BoxCollider2D>();
     }
 
     // Update is called once per frame
@@ -45,7 +44,7 @@ public class Grid : MonoBehaviour
         
     }
 
-    void InitCells()
+    public void InitCells()
     {
         GameObject cellObject = new GameObject();
         GameObject instanceMushroom = new GameObject();
@@ -124,13 +123,16 @@ public class Grid : MonoBehaviour
         Destroy(cellObject);
 
         topCollider.size = new Vector2(gridSize.x,1f);
-        topCollider.offset = new Vector2(0f, (gridSize.y / 2)+1f);
+        topCollider.offset = new Vector2(0f, (gridSize.y / 2)+0.2f);
 
         leftCollider.size = new Vector2(1f, gridSize.y);
-        leftCollider.offset = new Vector2(-(gridSize.x / 2) - 0.5f, 0f);
+        leftCollider.offset = new Vector2(-(gridSize.x / 2) -0.2f, 0f);
 
         rightCollider.size = new Vector2(1f, gridSize.y);
-        rightCollider.offset = new Vector2((gridSize.x / 2) + 0.5f, 0f);
+        rightCollider.offset = new Vector2((gridSize.x / 2) , 0f);
+
+        bottomCollider.size = new Vector2(gridSize.x, 1f);
+        bottomCollider.offset = new Vector2(0f, -(gridSize.y / 2));
 
     }
 

@@ -9,6 +9,7 @@ TagManager:
   - Mushroom
   - LeftCollider
   - RightCollider
+  - BottomCollider
   layers:
   - Default
   - TransparentFX

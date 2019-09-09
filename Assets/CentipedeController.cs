@@ -9,7 +9,7 @@ public class CentipedeController : MonoBehaviour
     private bool canMove = true, moving = false;
     public bool head = false;
     private Vector3 pos;
-    [SerializeField] private int centipedeSpeed = 5;
+    public int centipedeSpeed = 5;
 
 
     public SpriteRenderer spriteRenderer;
@@ -17,17 +17,19 @@ public class CentipedeController : MonoBehaviour
     private Vector2 savePosition;
     private bool checkPosition=true;
     private bool headLeft = false;
+    private Rigidbody2D rb2D;
     // Start is called before the first frame update
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
+        rb2D = GetComponent<Rigidbody2D>();
+        rb2D.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
     }
 
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(canMove + "canmove");
-        Debug.Log(moving + "moving");
+        
         savePosition = new Vector2(transform.position.x, transform.position.y);
 
         if (canMove)
@@ -78,22 +80,6 @@ public class CentipedeController : MonoBehaviour
 
         }
 
-        if (transform.position.y < savePosition.y)
-        {
-            Debug.Log("check y");
-            checkPosition = true;
-            if (transform.position.x < savePosition.x) 
-            {
-                MoveRight();
-                Debug.Log("check y go right");
-            }
-            else
-            {
-                MoveLeft();
-                Debug.Log("check y go left");
-
-            }
-        }
     }
 
     public void MoveRight()
@@ -130,14 +116,36 @@ public class CentipedeController : MonoBehaviour
 
         if(collision.tag == "RightCollider" || collision.tag == "LeftCollider" || collision.tag == "Mushroom")
         {
-           
+
             //checkPosition = false;
+            pos = gameObject.transform.position;
             pos += Vector3.down;
-            //MoveLeft();
             headLeft = !headLeft;
-            //Debug.Log("enter right");
         }
 
+        if(collision.tag == "BottomCollider"|| collision.tag == "TopCollider")
+        {
+            pos = gameObject.transform.position;
+            pos += Vector3.up;
+            if (collision.tag == "RightCollider")
+            {
+                headLeft = false;
+                return;
+            }
+            if (collision.tag == "LeftCollider")
+            {
+                headLeft = true;
+                return;
+            }
+            //headLeft = !headLeft;
+        }
+
+        if (collision.tag == "Player")
+        {
+            GameObject centipedeToBeDestroyed = GameObject.Find("centipedeBody(Clone)");
+
+            Destroy(centipedeToBeDestroyed.gameObject);
+        }
   
 
         

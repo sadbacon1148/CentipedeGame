@@ -15,7 +15,7 @@ public class PlayerController : MonoBehaviour
     private DIRECTION dir = DIRECTION.DOWN;
     private Vector3 pos;
     public Grid grid;
-    [SerializeField] private double yPlayerRange;
+    [SerializeField] private float yPlayerRange;
     [SerializeField] private float xPlayerRange;
     [SerializeField] private float yMinPlayerMove;
     [SerializeField] private float yMaxPlayerMove;
@@ -24,31 +24,30 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float playerOffset = 0.2f;
     private float nextFire;
     [SerializeField] private float fireRate;
-    public Transform spawnPosition;
-    public Text scoreText;
-    public Text livesText;
-    [SerializeField] private int lives = 3;
+    private Transform spawnPosition;
+    public Vector2 playerSpawnPosition;
 
 
     // Start is called before the first frame update
     void Start()
     {
-        yPlayerRange = grid.gridSize.y * 0.15;
+        grid = GameObject.Find("Grid").GetComponent<Grid>();
+        yPlayerRange = grid.gridSize.y * 0.15f;
         xPlayerRange = grid.gridSize.x;
         yMinPlayerMove = -((grid.gridSize.y) / 2);
         yMaxPlayerMove = yMinPlayerMove + (float)yPlayerRange;
         xMinPlayerMove = -((xPlayerRange) / 2);
-        xMaxPlayerMove = xPlayerRange/2;
-        transform.position = new Vector3(0, yMinPlayerMove+playerOffset, 0);
-
-        livesText.text = "Lives: " + lives.ToString();
+        xMaxPlayerMove = xPlayerRange / 2;
+        transform.position = new Vector2(0, yMinPlayerMove + playerOffset);
+        playerSpawnPosition = transform.position;
+        spawnPosition = GetComponentInChildren<Transform>();
 
     }
 
     // Update is called once per frame
     void Update()
     {
-        //buttonCoolDown--;
+       
         if (canMove)
         {
             pos = transform.position;
@@ -57,7 +56,7 @@ public class PlayerController : MonoBehaviour
 
         if (moving)
         {
-            if(transform.position == pos)
+            if (transform.position == pos)
             {
                 moving = false;
                 canMove = true;
@@ -86,73 +85,73 @@ public class PlayerController : MonoBehaviour
 
     private void Move()
     {
-             if (Input.GetKey(KeyCode.UpArrow))
-                {
-                if(dir != DIRECTION.UP)
-                {
-                    //buttonCoolDown = 5;
-                    dir = DIRECTION.UP;
-                }
-                else
-                {
-                    canMove = false;
-                    moving = true;
-                    pos += new Vector3(0f,1000f,0f);
-                    pos.y = Mathf.Clamp(pos.y, yMinPlayerMove+playerOffset, yMaxPlayerMove);
-
-                }
-             }
-            else if (Input.GetKey(KeyCode.DownArrow))
+        if (Input.GetKey(KeyCode.UpArrow))
+        {
+            if (dir != DIRECTION.UP)
             {
-                if (dir != DIRECTION.DOWN)
-                {
-                    //buttonCoolDown = 5;
-                    dir = DIRECTION.DOWN;
-                }
-                else
-                {
-                    canMove = false;
-                    moving = true;
-                    pos += Vector3.down;
-                    pos.y = Mathf.Clamp(pos.y, yMinPlayerMove+playerOffset, yMaxPlayerMove);
-
-                }
+                //buttonCoolDown = 5;
+                dir = DIRECTION.UP;
+            }
+            else
+            {
+                canMove = false;
+                moving = true;
+                pos += new Vector3(0f, 1000f, 0f);
+                pos.y = Mathf.Clamp(pos.y, yMinPlayerMove + playerOffset, yMaxPlayerMove);
 
             }
-            else if (Input.GetKey(KeyCode.LeftArrow))
+        }
+        else if (Input.GetKey(KeyCode.DownArrow))
+        {
+            if (dir != DIRECTION.DOWN)
             {
-                if (dir != DIRECTION.LEFT)
-                {
-                    //buttonCoolDown = 5;
-                    dir = DIRECTION.LEFT;
-                }
-                else
-                {
-                    canMove = false;
-                    moving = true;
-                    pos += Vector3.left;
-                    pos.x = Mathf.Clamp(pos.x, xMinPlayerMove+playerOffset, xMaxPlayerMove-playerOffset);
-                }
-
+                //buttonCoolDown = 5;
+                dir = DIRECTION.DOWN;
             }
-            else if (Input.GetKey(KeyCode.RightArrow))
+            else
             {
-                if (dir != DIRECTION.RIGHT)
-                {
-                    //buttonCoolDown = 5;
-                    dir = DIRECTION.RIGHT;
-                }
-                else
-                {
-                    canMove = false;
-                    moving = true;
-                    pos += Vector3.right;
-                    pos.x = Mathf.Clamp(pos.x, xMinPlayerMove+playerOffset, xMaxPlayerMove-playerOffset);
-                }
+                canMove = false;
+                moving = true;
+                pos += Vector3.down;
+                pos.y = Mathf.Clamp(pos.y, yMinPlayerMove + playerOffset, yMaxPlayerMove);
 
             }
 
-        
+        }
+        else if (Input.GetKey(KeyCode.LeftArrow))
+        {
+            if (dir != DIRECTION.LEFT)
+            {
+                //buttonCoolDown = 5;
+                dir = DIRECTION.LEFT;
+            }
+            else
+            {
+                canMove = false;
+                moving = true;
+                pos += Vector3.left;
+                pos.x = Mathf.Clamp(pos.x, xMinPlayerMove + playerOffset, xMaxPlayerMove - playerOffset);
+            }
+
+        }
+        else if (Input.GetKey(KeyCode.RightArrow))
+        {
+            if (dir != DIRECTION.RIGHT)
+            {
+                //buttonCoolDown = 5;
+                dir = DIRECTION.RIGHT;
+            }
+            else
+            {
+                canMove = false;
+                moving = true;
+                pos += Vector3.right;
+                pos.x = Mathf.Clamp(pos.x, xMinPlayerMove + playerOffset, xMaxPlayerMove - playerOffset);
+            }
+
+        }
+
+
 
 
     }
@@ -161,7 +160,7 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.tag == "Centipede")
         {
-            lives--;
+            GameController.Instance.DecreaseLivesAndInstantiate(gameObject);
         }
     }
 
