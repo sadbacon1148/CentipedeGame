@@ -62,7 +62,13 @@ public class CentipedeController : MonoBehaviour
             transform.position = Vector3.MoveTowards(transform.position, pos, Time.deltaTime * centipedeSpeed);
         }
 
-        
+        if (GameObject.Find("Player(Clone)") == null && GameObject.Find("Player") == null)
+        {
+            centipedeSpeed = 0;
+            GameController.Instance.GameOver();
+        }
+
+
     }
 
     public void CheckCentipedeDirection()   
@@ -140,13 +146,7 @@ public class CentipedeController : MonoBehaviour
             //headLeft = !headLeft;
         }
 
-        if (collision.tag == "Player")
-        {
-            GameObject centipedeToBeDestroyed = GameObject.Find("centipedeBody(Clone)");
-
-            Destroy(centipedeToBeDestroyed.gameObject);
-        }
-  
+        
 
         
     }

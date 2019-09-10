@@ -2,17 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+
 
 public class GameController : MonoBehaviour
 {
     public int numOfCentipedeUnit = 15;
     public Text scoreText;
     public Text livesText;
+    public Text gameOverText;
     public int lives = 3;
     public GameObject playerPrefab;
     public PlayerController playerController;
     public CentipedeController centipedeController;
     public Grid grid;
+    private bool gameOver = false;
     #region Singleton
 
     public static GameController Instance;
@@ -37,22 +41,56 @@ public class GameController : MonoBehaviour
         {
             centipedeController = GameObject.Find("centipedeBody(Clone)").GetComponent<CentipedeController>();
             centipedeController.centipedeSpeed = 0;
+            Debug.Log("centipede u should stop already");
         }
     }
 
-    public void DecreaseLivesAndInstantiate(GameObject playerTobeDestroy)
+    public void DecreaseLivesAndInstantiate(GameObject playerToBeDestroyed)
     {
-        if (lives != 0)
+        lives--;
+
+        if (lives >= 1)
         {
-            lives--;
             Instantiate(playerPrefab, playerController.playerSpawnPosition, Quaternion.identity);
         }
 
         Debug.Log(lives);
         livesText.text = "Lives: " + lives.ToString();
-        GameObject mushroomToBeDetroyed = GameObject.Find("mario-sprite(Clone)");
-        Destroy(playerTobeDestroy);
-        Destroy(mushroomToBeDetroyed);
+        Destroy(playerToBeDestroyed);
+
+        if (gameOver)
+        {
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                SceneManager.LoadScene("SampleScene");
+                gameOver = false;
+                gameOverText.gameObject.SetActive(false);
+            }
+        }
+
+        //Destroy all mushrooms and centipede body
+        GameObject[] mushroomToBeDetroyed;
+        mushroomToBeDetroyed = GameObject.FindGameObjectsWithTag("Mushroom");
+        foreach (GameObject mushroom in mushroomToBeDetroyed)
+        {
+            Destroy(mushroom);
+        }
+
+        GameObject[] centipedeToBeDetroyed;
+        centipedeToBeDetroyed = GameObject.FindGameObjectsWithTag("Centipede");
+        foreach (GameObject centipedeBody in centipedeToBeDetroyed)
+        {
+            Destroy(centipedeBody);
+        }
+
         grid.InitCells();
+    }
+
+    public void GameOver()
+    {
+        gameOverText.gameObject.SetActive(true);
+        Debug.Log("gameover");
+        gameOver = true;
+
     }
 }

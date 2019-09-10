@@ -96,7 +96,7 @@ public class PlayerController : MonoBehaviour
             {
                 canMove = false;
                 moving = true;
-                pos += new Vector3(0f, 1000f, 0f);
+                pos += Vector3.up;
                 pos.y = Mathf.Clamp(pos.y, yMinPlayerMove + playerOffset, yMaxPlayerMove);
 
             }
