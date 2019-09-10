@@ -7,7 +7,7 @@ public class CentipedeController : MonoBehaviour
 {
     public enum DIRECTION { UP, DOWN, LEFT, RIGHT }
     private bool canMove = true, moving = false;
-    public bool head = false;
+    public bool centipedeHead = false;
     private Vector3 pos;
     public int centipedeSpeed = 5;
 
@@ -15,9 +15,10 @@ public class CentipedeController : MonoBehaviour
     public SpriteRenderer spriteRenderer;
     public Sprite headSprite;
     private Vector2 savePosition;
-    private bool checkPosition=true;
     private bool headLeft = false;
     private Rigidbody2D rb2D;
+    private bool headUp = false;
+    private bool headDown = true;
     // Start is called before the first frame update
     void Start()
     {
@@ -25,7 +26,7 @@ public class CentipedeController : MonoBehaviour
         rb2D = GetComponent<Rigidbody2D>();
         rb2D.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
     }
-
+   
     // Update is called once per frame
     void Update()
     {
@@ -37,10 +38,9 @@ public class CentipedeController : MonoBehaviour
             Debug.Log("canmove");
             pos = transform.position;
             //create condition here
-            if (checkPosition)
-            {
-                CheckCentipedeDirection();   
-            }
+            
+            CheckCentipedeDirection();   
+            
          
             //transform.position = Vector3.MoveTowards(transform.position, pos, Time.deltaTime * centipedeSpeed);
 
@@ -54,10 +54,9 @@ public class CentipedeController : MonoBehaviour
                 moving = false;
                 canMove = true;
 
-                if (checkPosition)
-                {
-                    CheckCentipedeDirection();
-                }
+               
+                CheckCentipedeDirection();
+                
             }
             transform.position = Vector3.MoveTowards(transform.position, pos, Time.deltaTime * centipedeSpeed);
         }
@@ -74,7 +73,6 @@ public class CentipedeController : MonoBehaviour
     public void CheckCentipedeDirection()   
     {
         if(headLeft)
-        //if (transform.position.x < savePosition.x) //moving from the right
         {
             MoveLeft();
             Debug.Log("move left");
@@ -85,7 +83,6 @@ public class CentipedeController : MonoBehaviour
             Debug.Log("move right");
 
         }
-
     }
 
     public void MoveRight()
@@ -111,7 +108,6 @@ public class CentipedeController : MonoBehaviour
         canMove = false;
         moving = true;
         Debug.Log("OnTriggerEnter");
-        Debug.Log(checkPosition + "in right collider");
 
         if (collision.tag == "Bullet")
         {
@@ -122,38 +118,40 @@ public class CentipedeController : MonoBehaviour
 
         if(collision.tag == "RightCollider" || collision.tag == "LeftCollider" || collision.tag == "Mushroom")
         {
+            if (headUp)
+            {
+                pos = gameObject.transform.position;
+                pos += Vector3.up;
+                Debug.Log("headUp");
+            }
+            if (headDown)
+            {
+                pos = gameObject.transform.position;
+                pos += Vector3.down;
+                Debug.Log("headDown");
+            }
 
-            //checkPosition = false;
-            pos = gameObject.transform.position;
-            pos += Vector3.down;
             headLeft = !headLeft;
         }
 
-        if(collision.tag == "BottomCollider"|| collision.tag == "TopCollider")
+
+
+        if (collision.tag == "BottomCollider" && headDown)
         {
+            headDown = false;
+            headUp = true;
             pos = gameObject.transform.position;
             pos += Vector3.up;
-            if (collision.tag == "RightCollider")
-            {
-                headLeft = false;
-                return;
-            }
-            if (collision.tag == "LeftCollider")
-            {
-                headLeft = true;
-                return;
-            }
-            //headLeft = !headLeft;
         }
 
-        
-
-        
+        if(collision.tag == "TopCollider" && headUp)
+        {
+         
+            headUp = false;
+            headDown = true;
+            pos = gameObject.transform.position;
+            pos += Vector3.down;
+        }
     }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        
-    }
-
+    
 }

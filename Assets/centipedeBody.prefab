@@ -94,8 +94,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 388697a53bbf9d1438a6f7f7953777de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  head: 0
-  centipedeSpeed: 10
+  centipedeHead: 0
+  centipedeSpeed: 5
   spriteRenderer: {fileID: 7464358527702285597}
   headSprite: {fileID: 21300000, guid: 053acd8fcb0d25e439a9f781cca9b3f1, type: 3}
 --- !u!50 &667521585785373047

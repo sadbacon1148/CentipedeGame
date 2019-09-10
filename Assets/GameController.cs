@@ -43,6 +43,24 @@ public class GameController : MonoBehaviour
             centipedeController.centipedeSpeed = 0;
             Debug.Log("centipede u should stop already");
         }
+
+        if (gameOver)
+        {
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                SceneManager.LoadScene("SampleScene");
+                gameOver = false;
+                gameOverText.gameObject.SetActive(false);
+            }
+        }
+
+        GameObject[] centipedeToBeDetroyed;
+        centipedeToBeDetroyed = GameObject.FindGameObjectsWithTag("Centipede");
+        if(centipedeToBeDetroyed.Length == 0)
+        {
+            GameOver();
+        }
+
     }
 
     public void DecreaseLivesAndInstantiate(GameObject playerToBeDestroyed)
@@ -57,16 +75,6 @@ public class GameController : MonoBehaviour
         Debug.Log(lives);
         livesText.text = "Lives: " + lives.ToString();
         Destroy(playerToBeDestroyed);
-
-        if (gameOver)
-        {
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                SceneManager.LoadScene("SampleScene");
-                gameOver = false;
-                gameOverText.gameObject.SetActive(false);
-            }
-        }
 
         //Destroy all mushrooms and centipede body
         GameObject[] mushroomToBeDetroyed;

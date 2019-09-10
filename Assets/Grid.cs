@@ -31,7 +31,7 @@ public class Grid : MonoBehaviour
     public int centipedeNumber;
 
     public GameController gameController;
-    //List<GameObject> instanceCentipede = new List<GameObject>();
+    //public List<GameObject> instanceCentipede = new List<GameObject>();
 
 
     void Start()
@@ -44,7 +44,11 @@ public class Grid : MonoBehaviour
     {
         
     }
-
+    /*TODO: 1. Create List to store instantiateCentipede
+            2. When part of centipede body got shot it will return the part number to Split Function
+            3. In Split Function, it will check if centipede is moving left or right
+            4. compare the rest of number with the midpoint of the sceen to determine whether it's on the left or right of the screen
+            4. then split the centipede to move towards left and right*/
     public void InitCells()
     {
         centipedeNumber = gameController.numOfCentipedeUnit;
@@ -87,18 +91,16 @@ public class Grid : MonoBehaviour
                 if (randomSpawn > 8 && row < rows - 2f && row > 2f && col<cols-1f && col>0.5f)
                 {
                     instanceMushroom = Instantiate(mushroomPrefab, pos, Quaternion.identity) as GameObject;
-                    Debug.Log("spawn mushroom");
-                    //Debug.Log(row + "____" + rows);
                 }
 
                 if (row > rows -2)
                 {
-                    Debug.Log(row + "CENTIPEDE" + rows);
                     if (centipedeNumber > 1 )
                     {
-                        Instantiate(centipedeSprite,pos, Quaternion.identity);
+                        GameObject instanceCentipede = Instantiate(centipedeSprite,pos, Quaternion.identity);
+                        //instanceCentipede.Add(tempCentipede);
                         centipedeNumber--;
-                        Debug.Log("centipede--");
+                        
                     }
                     else
                     {
@@ -107,11 +109,10 @@ public class Grid : MonoBehaviour
                             //instanceCentipede.Add(Instantiate(centipedeSprite, pos, Quaternion.identity) as GameObject);
                             GameObject instanceCentipede = Instantiate(centipedeSprite, pos, Quaternion.identity);
                             CentipedeController centipedeController = instanceCentipede.GetComponent<CentipedeController>();
-                            centipedeController.head = true;
+                            centipedeController.centipedeHead = true;
                             centipedeController.spriteRenderer.sprite = centipedeController.headSprite;
                             centipedeNumber--;
                         }
-                        Debug.Log("centipede else");
                     }
                 }
 

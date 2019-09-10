@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 8266897633876852651}
   - component: {fileID: 7249414384347943806}
   - component: {fileID: 428495973788182435}
-  - component: {fileID: -6289675698398319274}
+  - component: {fileID: 459873666805471588}
+  - component: {fileID: -6903082161660469474}
   m_Layer: 0
   m_Name: mario-sprite
   m_TagString: Mushroom
@@ -94,8 +95,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   requireBulletToDestroy: 3
---- !u!58 &-6289675698398319274
-CircleCollider2D:
+--- !u!61 &459873666805471588
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -107,6 +108,42 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.023628533, y: -0.011796534}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.59, y: 0.73}
+    newSize: {x: 0.59, y: 0.73}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
   serializedVersion: 2
-  m_Radius: 0.365
+  m_Size: {x: 0.7672142, y: 0.8597611}
+  m_EdgeRadius: 0
+--- !u!61 &-6903082161660469474
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1345852895547260257}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.018293768, y: -0.056890428}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.59, y: 0.73}
+    newSize: {x: 0.59, y: 0.73}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.6124838, y: 0.6093675}
+  m_EdgeRadius: 0

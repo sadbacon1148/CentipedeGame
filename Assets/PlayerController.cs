@@ -67,7 +67,6 @@ public class PlayerController : MonoBehaviour
         }
 
         if (Input.GetKeyDown(KeyCode.Space) && Time.time > nextFire)
-        //if (Input.GetButton("Fire1") && Time.time > nextFire)
         {
             nextFire = Time.time + fireRate;
             ObjectPooler.Instance.SpawnFromPool("Bullet", spawnPosition.position, Quaternion.identity);
@@ -75,13 +74,6 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    private void LateUpdate()
-    {
-        //Vector3 playerPosition = transform.position;
-        //playerPosition.x = Mathf.Clamp(playerPosition.x, xMinPlayerMove, xMaxPlayerMove);
-        //playerPosition.y = Mathf.Clamp(playerPosition.y, yMinPlayerMove, yMaxPlayerMove);
-        //transform.position = playerPosition;
-    }
 
     private void Move()
     {
@@ -89,7 +81,6 @@ public class PlayerController : MonoBehaviour
         {
             if (dir != DIRECTION.UP)
             {
-                //buttonCoolDown = 5;
                 dir = DIRECTION.UP;
             }
             else
@@ -105,7 +96,6 @@ public class PlayerController : MonoBehaviour
         {
             if (dir != DIRECTION.DOWN)
             {
-                //buttonCoolDown = 5;
                 dir = DIRECTION.DOWN;
             }
             else
@@ -122,7 +112,6 @@ public class PlayerController : MonoBehaviour
         {
             if (dir != DIRECTION.LEFT)
             {
-                //buttonCoolDown = 5;
                 dir = DIRECTION.LEFT;
             }
             else
@@ -138,7 +127,6 @@ public class PlayerController : MonoBehaviour
         {
             if (dir != DIRECTION.RIGHT)
             {
-                //buttonCoolDown = 5;
                 dir = DIRECTION.RIGHT;
             }
             else
@@ -151,9 +139,6 @@ public class PlayerController : MonoBehaviour
 
         }
 
-
-
-
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -161,6 +146,12 @@ public class PlayerController : MonoBehaviour
         if (collision.tag == "Centipede")
         {
             GameController.Instance.DecreaseLivesAndInstantiate(gameObject);
+        }
+
+        if (collision.tag == "Mushroom")
+        {
+            pos += Vector3.right;
+            Debug.Log("enter mushroom");
         }
     }
 
